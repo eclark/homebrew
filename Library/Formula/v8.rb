@@ -18,9 +18,19 @@ class V8 <Formula
                     "console=readline",
                     "sample=shell"
 
+    system "scons", "-j #{Hardware.processor_count}",
+                    "arch=#{arch}",
+                    "mode=release",
+                    "snapshot=on",
+                    "library=shared",
+                    "visibility=default",
+                    "console=readline",
+                    "d8"
+
     include.install Dir['include/*']
     lib.install Dir['libv8.*']
     bin.install 'shell' => 'v8'
+    bin.install 'd8' => 'd8'
 
     system "install_name_tool -change libv8.dylib #{lib}/libv8.dylib #{bin}/v8"
   end
